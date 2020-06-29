@@ -1237,10 +1237,21 @@ def cmd_outdated(src_dir, savetxt, delete):
                     info(path)
 
     # Nothing old found      
-    if OutdatedFiles == 0: info("There is nothing to remove.")
+    if OutdatedFiles == 0: info("There is nothing to remove. Your library is up-to-date.")
 
     # Old files found
-    if OutdatedFiles == 1: info("There is 1 outdated file.")
+    if OutdatedFiles == 1: 
+        info("There is 1 outdated file.") 
+        if delete: 
+                for root, dirs, files in os.walk(src_dir):
+                    for name in files:
+                        path = os.path.join(root, name)
+                        if os.path.isfile(path):
+                            if name not in LatestInstallers:
+                                info('Removed: %s' % path)
+                                os.remove(path) 
+                info("Your library has been cleaned.")
+
     if OutdatedFiles > 1: 
         info("There are %s outdated files." %OutdatedFiles)
         if delete: 
@@ -1251,7 +1262,7 @@ def cmd_outdated(src_dir, savetxt, delete):
                         if name not in LatestInstallers:
                             info('Removed: %s' % path)
                             os.remove(path) 
-            info("Your library has been cleaned")
+            info("Your library has been cleaned.")
 
 
 def main(args):
