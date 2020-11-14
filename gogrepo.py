@@ -1217,7 +1217,7 @@ def cmd_outdated(src_dir, savetxt, delete):
     
     # Find filenames for all installers and extras in the manifest
     with open(MANIFEST_FILENAME, encoding="utf8") as text_file:    
-        LatestInstallers = re.findall(r'\:\s\'(.*\.(?:exe|bin|zip|tar\.gz|sh|pkg|dmg))', text_file.read())
+        LatestInstallers = re.findall(r'\:\s(?:\'|\")(.*\.(?:exe|bin|zip|tar\.gz|sh|pkg|dmg|mp4))(?:\'|\")', text_file.read())
 
     # Save list of filenames to a text file
     if savetxt:
